@@ -4,6 +4,7 @@ require 'active_support/inflector'
 class InteractiveRecord
 
   def self.table_name
+    #takes the interactive record downcases it and the plurals it
     self.to_s.downcase.pluralize
   end
 
@@ -49,7 +50,11 @@ class InteractiveRecord
   end
 
 def self.find_by_name(name)
-  sql = "SELECT * FROM #{self.table_name} WHERE name = ?"
+  sql = <<-SQL
+  SELECT * 
+  FROM #{self.table_name} 
+  WHERE name = ?
+  SQL
   DB[:conn].execute(sql, name)
 end
 
